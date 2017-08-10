@@ -1,0 +1,35 @@
+#rectangle {
+  margin-top: 20px;
+  height: 320px;
+  width: 200px;
+  background: lightblue;
+  font-family: Courier;
+  border-radius: 15px;
+}
+
+#display {
+  height: 60px;
+  width: 180px;
+  background: #b3b3b3;
+  border-radius: 15px;
+  font-family: Courier;
+}
+
+#results {
+  font-size: 30px;
+}
+
+#data_entry {
+  font-size: 10px;
+}
+
+p {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+button {
+  margin-top: 5px;
+  font-size: 18px;
+  border-radius: 5px;
+}
