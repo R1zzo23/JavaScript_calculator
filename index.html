@@ -18,6 +18,8 @@
 
     <script>
       $(document).ready(function(){
+        var dataEntry = document.getElementById('dataEntry');
+        var lastPush = document.getElementById('lastPush');
         var lastType;
         var firstNumber;
         var secondNumber;
@@ -26,40 +28,66 @@
         $("button").click(function() {
           if ($(this).hasClass("number")) {
 
-            document.getElementById('dataEntry').innerHTML += this.innerHTML;
+            //dataEntry.innerHTML += this.innerHTML;
             if (lastType == "number") {
-              document.getElementById('lastPush').innerHTML += this.innerHTML;
+              lastPush.innerHTML += this.innerHTML;
             }
             else {
-              document.getElementById('lastPush').innerHTML = this.innerHTML;
+              lastPush.innerHTML = this.innerHTML;
             }
             lastType = "number";
           }
           if ($(this).hasClass("operation") || $(this).hasClass("equals")) {
             if (firstNumber == "") {
-              firstNumber = parseInt(document.getElementById('lastPush').innerHTML);
+              firstNumber = parseInt(lastPush.innerHTML);
+              alert(firstNumber);
             }
             if (firstNumber !== "" && secondNumber == "") {
-              secondNumber = parseInt(document.getElementById('lastPush').innerHTML);
+              secondNumber = parseInt(lastPush.innerHTML);
             }
             if (firstNumber !== "" && secondNumber !== "" && symbol !== "") {
-              document.getElementById('lastPush').innerHTML = firstNumber + symbol + secondNumber;
+              lastPush.innerHTML = firstNumber + symbol + secondNumber;
             }
-            if (document.getElementById('dataEntry').innerHTML == "") {
+            if (dataEntry.innerHTML == "") {
 
             }
             else if (lastType !== "operation") {
               symbol = this.innerHTML;
               lastType = "operation";
-              document.getElementById('dataEntry').innerHTML += this.innerHTML;
-              document.getElementById('lastPush').innerHTML = this.innerHTML;
+              dataEntry.innerHTML = lastPush.innerHTML;
+              lastPush.innerHTML = this.innerHTML;
             }
             else {
 
             }
+            alert(firstNumber);
+          }
+          if ($(this).hasClass("allClear")) {
+            dataEntry.innerHTML = "";
+            lastPush.innerHTML = "";
+          }
+          if ($(this).hasClass("clearEntry")) {
+            if (lastPush.innerHTML.length > 1) {
+              lastPush.innerHTML = lastPush.innerHTML.slice(0,-1);
+            }
           }
         });
       });
+
+      function math(num1, num2, sym) {
+        if (sym == "+"){
+          return num1 + num2;
+        }
+        else if (sym == "-") {
+          return num1 - num2;
+        }
+        else if (sym == "X") {
+          return num1 * num2;
+        }
+        else if (sym == "/") {
+          return num1 / num2;
+        }
+      }
 
     </script>
   </head>
@@ -81,8 +109,8 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-          <button>AC</button>
-          <button>CE</button>
+          <button class="allClear">AC</button>
+          <button class="clearEntry">CE</button>
           <button class="operation">/</button>
         </div>
       </div>
