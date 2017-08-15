@@ -17,106 +17,102 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
     <script>
-
     var dataEntry = document.getElementById('dataEntry');
     var lastPush = document.getElementById('lastPush');
     var lastType;
-    var current = 0;
-    var total = 0;
+    var current = "0";
+    var memory;
     var symbol = 0;
-    var maxLength = 30;
+    var maxLength = 9;
 
-    function addDigit(dig) {
-      if (current.length > maxLength) {
-         current = "Aargh! Too long"; //limit length
+    function addDigit(num) {
+      if (symbol == 0) {
+        memory = undefined;
+        document.getElementById("dataEntry").innerHTML = "0";
+      }
+      if (current.length > maxLength -1) {
+         current = "Too long!"; //limit length
       }
       else {
-        if (    (eval(current) == 0) && (current.indexOf(".") == -1)) {
-          current = dig;
-        }
-        else {
-         current = current + dig;
-        };
-      };
-      lastPush.value = current;
-    };
-
-    $(document).ready(function(){
-
-    });
-
-
-      /*function addDigit(num) {
-        if ((eval(current) == 0) && (current.indexOf(".") == -1)) {
+        if ((current.indexOf(".") == -1) && (eval(current) == 0)) {
           current = num;
         }
         else {
-          current += num;
+         current += num;
         }
-        lastPush.value = current;
-      };*/
+      }
+      document.getElementById('lastPush').innerHTML = current;
+    }
 
-      /*$("button").click(function() {
-        if ($(this).hasClass("number")) {
+    function addDecimal() {
+      if (eval(current) == 0) {
+        current = "0.";
+      }
+      else if (current.indexOf(".") == -1) {
+        current += ".";
+      }
+      document.getElementById('lastPush').innerHTML = current;
+    }
 
-          //dataEntry.innerHTML += this.innerHTML;
-          if (lastType == "number") {
-            lastPush.innerHTML += this.innerHTML;
+    function math(num) {
+      var temp;
+      if (memory === undefined) {
+        console.log("Memory is empty.");
+        temp = current;
+      }
+      else {
+        if (symbol == 1) {
+          temp = eval(memory) + eval(current);
+        }
+        else if (symbol == 2) {
+          temp = eval(memory) - eval(current);
+        }
+        else if (symbol == 3) {
+          temp = eval(memory) * eval(current);
+        }
+        else if (symbol == 4) {
+          if (current == 0) {
+            temp = "Error: div by 0";
           }
           else {
-            lastPush.innerHTML = this.innerHTML;
+            temp = eval(memory) / eval(current);
           }
-          lastType = "number";
         }
-        if ($(this).hasClass("operation") || $(this).hasClass("equals")) {
-          var temp = lastPush.innerHTML;
-          var number = + temp;
+        else if (symbol == 0) {
+          temp = memory;
+        }
+      }
+      memory = temp;
+      symbol = num;
+      current = "0";
+      document.getElementById('lastPush').innerHTML = current;
+      document.getElementById('dataEntry').innerHTML = memory;
+    }
 
-          if (lastType !== "operation") {
-            symbol = this.innerHTML;
-            lastType = "operation";
-            //dataEntry.innerHTML = lastPush.innerHTML;
-            //lastPush.innerHTML = this.innerHTML;
-          }
+    function negative() {
+      var str = current;
+      if (str.indexOf("-") == -1) {
+        str = "-" + str;
+      }
+      else if (str.indexOf("-") == 0) {
+        str = str.replace(/-/g, "");
+      }
+      current = str;
+      document.getElementById("lastPush").innerHTML = current;
+    }
 
-          if (total == "") {
-            lastPush.innerHTML = number;
-            total = number;
-            console.log(total);
-          }
-          else {
-            //symbol = $(this).innerHTML;
-            console.log("Total: " + total + " Number: " + number + " Symbol: " + symbol);
-            lastPush.innertHTML = math(total, number, symbol);
-            total = math(total, number, symbol);
-          }
-        }
-        if ($(this).hasClass("allClear")) {
-          dataEntry.innerHTML = "";
-          lastPush.innerHTML = "";
-        }
-        if ($(this).hasClass("clearEntry")) {
-          if (lastPush.innerHTML.length > 1) {
-            lastPush.innerHTML = lastPush.innerHTML.slice(0,-1);
-          }
-        }
-      });
-    });*/
+    function allClear() {
+      current = "0";
+      memory = undefined;
+      symbol = 0;
+      document.getElementById('lastPush').innerHTML = "0";
+      document.getElementById('dataEntry').innerHTML = "0";
+    }
 
-    function math(num1, num2, sym) {
-      if (sym == "+"){
-        return num1 + num2;
-      }
-      else if (sym == "-") {
-        return num1 - num2;
-      }
-      else if (sym == "X") {
-        return num1 * num2;
-      }
-      else if (sym == "/") {
-        return num1 / num2;
-      }
-    };
+    function clearEntry() {
+      current = "0";
+      document.getElementById('lastPush').innerHTML = "0";
+    }
 
     </script>
   </head>
@@ -125,53 +121,54 @@
     <div id="rectangle" class="container-fluid"> <!-- Beginning of Container -->
       <div class="row"> <!-- Beginning of Row -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-          <p>E-Calculator: Powered by <img height=25 width=25 src="images/javascript_logo.png"></p>
+          <p id="calcTitle">E-Calculator: Powered by <img height=25 width=25 src="images/javascript_logo.png"></p>
         </div>
       </div> <!-- End of Row -->
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-right">
           <div id="display">
-            <p id="lastPush"></p>
-            <p id="dataEntry"></p>
+            <p id="lastPush">0</p>
+            <p id="dataEntry">0</p>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-          <button class="allClear">AC</button>
-          <button class="clearEntry">CE</button>
-          <button class="operation">/</button>
+          <button style="width:32%" onclick="allClear()">AC</button>
+          <button style="width:32%" onclick="clearEntry()">CE</button>
+          <button style="width:20%" onclick="math(4)">/</button>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-          <button class="number" value='7' OnClick=addDigit('7')>7</button>
-          <button class="number" value='8' OnClick=addDigit('8')>8</button>
-          <button class="number" value='9' OnClick=addDigit('9')>9</button>
-          <button class="operation">X</button>
+          <button style="width:20%" onclick="addDigit('7')">7</button>
+          <button style="width:20%" onclick="addDigit('8')">8</button>
+          <button style="width:20%" onclick="addDigit('9')">9</button>
+          <button style="width:20%" onclick="math(3)">X</button>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-          <button class="number" value='4' OnClick=addDigit('4')>4</button>
-          <button class="number" value='5' OnClick=addDigit('5')>5</button>
-          <button class="number" value='6' OnClick=addDigit('6')>6</button>
-          <button class="operation">-</button>
+          <button style="width:20%" onclick="addDigit('4')">4</button>
+          <button style="width:20%" onclick="addDigit('5')">5</button>
+          <button style="width:20%" onclick="addDigit('6')">6</button>
+          <button style="width:20%" onclick="math(2)">-</button>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-          <button class="number" value='1' OnClick=addDigit('1')>1</button>
-          <button class="number" value='2' OnClick=addDigit('2')>2</button>
-          <button class="number" value='3' OnClick=addDigit('3')>3</button>
-          <button class="operation">+</button>
+          <button style="width:20%" onclick="addDigit('1')">1</button>
+          <button style="width:20%" onclick="addDigit('2')">2</button>
+          <button style="width:20%" onclick="addDigit('3')">3</button>
+          <button style="width:20%" onclick="math(1)">+</button>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-          <button class="number" value='0' OnClick=addDigit('0')>0</button>
-          <button class="decimal" id="decimal">.</button>
-          <button class="equals" id="equals">=</button>
+          <button style="width:20%" onclick="addDigit('0')">0</button>
+          <button style="width:20%" onclick="addDecimal()">.</button>
+          <button style="width:20%" onclick="negative()">+-</button>
+          <button style="width:20%" onclick="math(0)">=</button>
         </div>
       </div>
     </div> <!-- End of Container -->

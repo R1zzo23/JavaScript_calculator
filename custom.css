@@ -7,6 +7,10 @@
   border-radius: 15px;
 }
 
+#calcTitle {
+  font-weight: bold;
+}
+
 #display {
   height: 60px;
   width: 180px;
@@ -17,10 +21,12 @@
 
 #lastPush {
   font-size: 30px;
+  margin-right: 5px;
 }
 
 #dataEntry {
   font-size: 10px;
+  margin-right: 10px;
 }
 
 p {
