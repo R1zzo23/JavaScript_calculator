@@ -1,10 +1,10 @@
 #rectangle {
-  margin-top: 20px;
-  height: 320px;
-  width: 200px;
+  margin-top: 2em;
+  height: 25em;
+  width: 20em;
   background: lightblue;
   font-family: Courier;
-  border-radius: 15px;
+  border-radius: 1em;
 }
 
 #calcTitle {
@@ -12,30 +12,30 @@
 }
 
 #display {
-  height: 60px;
-  width: 180px;
+  height: 20%;
+  width: 98%;
   background: #b3b3b3;
-  border-radius: 15px;
+  border-radius: 1em;
   font-family: Courier;
 }
 
 #lastPush {
-  font-size: 30px;
-  margin-right: 5px;
+  font-size: 3em;
+  margin-right: 0.1em;
 }
 
 #dataEntry {
-  font-size: 10px;
-  margin-right: 10px;
+  font-size: 1em;
+  margin-right: 1em;
 }
 
 p {
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: .1em;
+  margin-bottom: .1em;
 }
 
 button {
-  margin-top: 5px;
-  font-size: 18px;
-  border-radius: 5px;
+  margin-top: 1em;
+  font-size: 1em;
+  border-radius: .25em;
 }

@@ -62,20 +62,20 @@
       }
       else {
         if (symbol == 1) {
-          temp = eval(memory) + eval(current);
+          temp = (eval(memory)*10000000 + eval(current)*10000000)/10000000;
         }
         else if (symbol == 2) {
-          temp = eval(memory) - eval(current);
+          temp = (eval(memory)*10000000 - eval(current)*10000000)/10000000;
         }
         else if (symbol == 3) {
-          temp = eval(memory) * eval(current);
+          temp = (eval(memory)*1000) * (eval(current)*1000)/1000000;
         }
         else if (symbol == 4) {
           if (current == 0) {
             temp = "Error: div by 0";
           }
           else {
-            temp = eval(memory) / eval(current);
+            temp = (eval(memory)*10000000) / (eval(current)*10000000);
           }
         }
         else if (symbol == 0) {
